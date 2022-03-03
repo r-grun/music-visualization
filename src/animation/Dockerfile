@@ -7,8 +7,8 @@ RUN apt-get update \
 
 RUN apt-get install python3-dev python3-pip
 
-RUN pip install numpy
+RUN pip install numpy colormath
 
 WORKDIR /animation
 
-COPY animationmanager.py animationmanager.py
+COPY . .
