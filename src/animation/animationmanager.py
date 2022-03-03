@@ -1,6 +1,7 @@
 import numpy as np
 from os import walk
 import time
+import pandas as pd
 from colormath.color_objects import sRGBColor
 
 ### Data types
@@ -12,6 +13,8 @@ ANIMATIONS_PATH = './matrices/'
 PITCH_COLORS_FILE = 'pitch_colors.txt'
 PITCH_COLORS = []
 
+
+### Global variables
 animations = []
 current_animation = []
 global_animation_counter = 0
@@ -33,6 +36,7 @@ def load_matrices() -> None:
         print(str(len(animations)) + ' animation(s) imported.')
     except IOError:
         print('No animations found.')
+        raise
 
 
 
@@ -41,20 +45,41 @@ def load_pitch_colors() -> None:
         Loads the pitch color mapping matrix and sets it to the global constant
     """
 
+    global PITCH_COLORS_FILE
+    global PITCH_COLORS
+
     try:
-        PITCH_COLORS = np.loadtxt(PITCH_COLORS_FILE, dtype='str')
+        print('Importing pitch color matrix...')
+
+        PITCH_COLORS = pd.read_csv(PITCH_COLORS_FILE, dtype='str', sep=' ', header=None).to_numpy()
     except IOError:
         print('Pitch color mappings could not be loaded.')
+        raise
 
 
 
 def convert_pitch_to_rbg(pitch) -> sRGBColor:
     """
         Converts the pitch to a color based on the Newton Color principle.
-        The pitch is a string as 'Em minor' or 'F# major'.
+        The pitch is a string as 'Em' or 'F#'.
+        The first row contains the Major Chords.
+        The second row contains the Minor Chords.
+        Rows 3, 4, 5 contain the R, G, B Value of the Chord
         The returned Vector is a sRGBColor
     """
+
+    global PITCH_COLORS
+
+    index = 0
+
+    if (pitch[-1] != 'm'):
+        index = np.where(PITCH_COLORS[0] == pitch)[0][0]
+    else:
+        index = np.where(PITCH_COLORS[1] == pitch)[0][0]
     
+    return sRGBColor(PITCH_COLORS[2][index], PITCH_COLORS[3][index], PITCH_COLORS[4][index])
+
+
 
 
 def read_music_extractors() -> Vector:
@@ -65,7 +90,8 @@ def read_music_extractors() -> Vector:
 
     # TODO: implement
 
-    return [0, 0, 'str']
+    return (255, 120, 'C')
+
 
 
 def show_leds(led_config = []) -> None:
@@ -75,8 +101,8 @@ def show_leds(led_config = []) -> None:
     """
 
     # TODO: implement
+    print(led_config)
 
-    pass
 
 
 
@@ -84,18 +110,23 @@ def add_extractors_to_animation_state(vol, pitch, animation_state = []) -> list:
     """
         Adds the extractors to the animation state.
         The pitch is a Vector of three values (r, g, b) with values from 0 to 255
-        Returns the calculated animation state
+        Returns the converted animation state
     """
 
+    converted_animation_state = []
     rel_vol = vol / 255
 
+    current_color = convert_pitch_to_rbg(pitch)
+
     for state in animation_state:
-        rgb_state = sRGBColor.new_from_rgb_hex(current_animation[current_animation_counter])
-        rgb_state.rgb_r = rgb_state.rgb_r * rel_vol
+        rgb_state = sRGBColor.new_from_rgb_hex(state)
+        rgb_state.rgb_r = current_color.rgb_r *  (rgb_state.rgb_r / 255 ) * rel_vol
+        rgb_state.rgb_g = current_color.rgb_g *  (rgb_state.rgb_g / 255 ) * rel_vol
+        rgb_state.rgb_b = current_color.rgb_b *  (rgb_state.rgb_b / 255 ) * rel_vol
+        converted_animation_state.append(rgb_state)
 
-    # TODO: implement
 
-    pass
+    return converted_animation_state
 
 
 def pause_animation(bpm) -> None:
@@ -112,7 +143,10 @@ def pause_animation(bpm) -> None:
 
 
 def main():
+    global current_animation_counter, current_animation, global_animation_counter, animations
+
     load_matrices()
+    load_pitch_colors()
 
     while True:
 
@@ -125,15 +159,15 @@ def main():
             show_leds(adapted_current_state)
 
             current_animation_counter += 1
-            if (current_animation_counter > len(current_animation)):
+            if (current_animation_counter >= len(current_animation)):
                 current_animation_counter = 0
 
             pause_animation(bpm)
             
 
-        animation_counter += 1
-        if (animation_counter > len(animations)):
-            animation_counter = 0
+        global_animation_counter += 1
+        if (global_animation_counter >= len(animations)):
+            global_animation_counter = 0
         
 
 

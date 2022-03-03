@@ -7,7 +7,7 @@ RUN apt-get update \
 
 RUN apt-get install python3-dev python3-pip
 
-RUN pip install numpy colormath
+RUN pip install numpy colormath pandas
 
 WORKDIR /animation
 
