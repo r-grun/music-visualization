@@ -25,6 +25,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && cd / && rm -rf /essentia/essentia
 
+RUN pip install soundcard
 
 ENV PYTHONPATH /usr/local/lib/python3/dist-packages
 
@@ -36,4 +37,4 @@ RUN export PULSE_SERVER=tcp:127.0.0.1
 ### COPY OWN ANALYZATION-FILES ###
 ##################################
 
-COPY analyzer.py analyzer.py
+COPY . .
