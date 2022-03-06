@@ -10,8 +10,8 @@ Vector = list[int]
 
 ### Constants
 ANIMATIONS_PATH = './matrices/'
-PITCH_COLORS_FILE = 'pitch_colors.txt'
-PITCH_COLORS = []
+KEY_COLORS_FILE = 'key_colors.txt'
+KEY_COLORS = []
 
 
 ### Global variables
@@ -40,44 +40,44 @@ def load_matrices() -> None:
 
 
 
-def load_pitch_colors() -> None:
+def load_key_colors() -> None:
     """
-        Loads the pitch color mapping matrix and sets it to the global constant
+        Loads the key color mapping matrix and sets it to the global constant
     """
 
-    global PITCH_COLORS_FILE
-    global PITCH_COLORS
+    global KEY_COLORS_FILE
+    global KEY_COLORS
 
     try:
-        print('Importing pitch color matrix...')
+        print('Importing key color matrix...')
 
-        PITCH_COLORS = pd.read_csv(PITCH_COLORS_FILE, dtype='str', sep=' ', header=None).to_numpy()
+        KEY_COLORS = pd.read_csv(KEY_COLORS_FILE, dtype='str', sep=' ', header=None).to_numpy()
     except IOError:
-        print('Pitch color mappings could not be loaded.')
+        print('Key color mappings could not be loaded.')
         raise
 
 
 
-def convert_pitch_to_rbg(pitch) -> sRGBColor:
+def convert_key_to_rbg(key) -> sRGBColor:
     """
-        Converts the pitch to a color based on the Newton Color principle.
-        The pitch is a string as 'Em' or 'F#'.
+        Converts the key to a color based on the Newton Color principle.
+        The key is a string as 'Em' or 'F#'.
         The first row contains the Major Chords.
         The second row contains the Minor Chords.
         Rows 3, 4, 5 contain the R, G, B Value of the Chord
         The returned Vector is a sRGBColor
     """
 
-    global PITCH_COLORS
+    global KEY_COLORS
 
     index = 0
 
-    if (pitch[-1] != 'm'):
-        index = np.where(PITCH_COLORS[0] == pitch)[0][0]
+    if (key[-1] != 'm'):
+        index = np.where(KEY_COLORS[0] == key)[0][0]
     else:
-        index = np.where(PITCH_COLORS[1] == pitch)[0][0]
+        index = np.where(KEY_COLORS[1] == key)[0][0]
     
-    return sRGBColor(PITCH_COLORS[2][index], PITCH_COLORS[3][index], PITCH_COLORS[4][index])
+    return sRGBColor(KEY_COLORS[2][index], KEY_COLORS[3][index], KEY_COLORS[4][index])
 
 
 
@@ -85,7 +85,7 @@ def convert_pitch_to_rbg(pitch) -> sRGBColor:
 def read_music_extractors() -> Vector:
     """
         Imports the music extractors from the cache.
-        Returns [vol: int, bpm: int, pitch: str]
+        Returns [vol: int, bpm: int, key: str]
     """
 
     # TODO: implement
@@ -106,17 +106,17 @@ def show_leds(led_config = []) -> None:
 
 
 
-def add_extractors_to_animation_state(vol, pitch, animation_state = []) -> list:
+def add_extractors_to_animation_state(vol, key, animation_state = []) -> list:
     """
         Adds the extractors to the animation state.
-        The pitch is a Vector of three values (r, g, b) with values from 0 to 255
+        The key is a Vector of three values (r, g, b) with values from 0 to 255
         Returns the converted animation state
     """
 
     converted_animation_state = []
     rel_vol = vol / 255
 
-    current_color = convert_pitch_to_rbg(pitch)
+    current_color = convert_key_to_rbg(key)
 
     for state in animation_state:
         rgb_state = sRGBColor.new_from_rgb_hex(state)
@@ -146,16 +146,16 @@ def main():
     global current_animation_counter, current_animation, global_animation_counter, animations
 
     load_matrices()
-    load_pitch_colors()
+    load_key_colors()
 
     while True:
 
         current_animation = animations[global_animation_counter]
 
         while current_animation_counter < len(current_animation):
-            vol, bpm, pitch = read_music_extractors()
+            vol, bpm, key = read_music_extractors()
             current_state = current_animation[current_animation_counter]
-            adapted_current_state = add_extractors_to_animation_state(vol, pitch, current_state)
+            adapted_current_state = add_extractors_to_animation_state(vol, key, current_state)
             show_leds(adapted_current_state)
 
             current_animation_counter += 1
