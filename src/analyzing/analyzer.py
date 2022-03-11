@@ -5,7 +5,7 @@ from essentia import Pool, run, reset
 from essentia.streaming import (
     VectorInput,
     FrameCutter,
-    PercivalBpmEstimator
+    RhythmExtractor2013
 )
 
 def save_to_db(bpm, vol, key):
@@ -27,25 +27,29 @@ def main():
     sample_rate = 44100
     frame_size = 512 
     hop_size = 256
-    n_bands = 96
     patch_size = 64
-    display_size = 10
+    length_factor = 15
 
-    buffer_size = patch_size * hop_size
+    buffer_size = patch_size * hop_size * length_factor
 
 
     # Configure algorithms
     buffer = np.zeros(buffer_size, dtype='float32')
     vimp = VectorInput(buffer)
-    fc = FrameCutter(frameSize=frame_size, hopSize=hop_size)
-    bpm = PercivalBpmEstimator(frameSize = frame_size, hopSize = hop_size, sampleRate = sample_rate)
+    # fc = FrameCutter(frameSize=frame_size, hopSize=hop_size)
+    extractor = RhythmExtractor2013()
     pool = Pool()
 
 
     # Configure network
-    vimp.data   >>  fc.signal
-    fc.frame    >>  bpm.signal
-    bpm.bpm     >>  (pool, 'bpm')
+    # vimp.data   >>  fc.signal
+    # fc.frame    >>  extractor.signal
+    vimp.data   >>  extractor.signal
+    extractor.bpm     >>  (pool, 'bpm')
+    extractor.ticks     >>  (pool, 'ticks')
+    extractor.confidence     >>  (pool, 'confidence')
+    extractor.estimates     >>  (pool, 'estimates')
+    extractor.bpmIntervals     >>  (pool, 'bpmIntervals')
 
 
 
