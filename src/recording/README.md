@@ -1,6 +1,6 @@
 # Instructions on how to use recording functionality
 
-The script will record the audio loopback (of the speakers and microphone-input) and store it in files of 6s length in the foler `recording/recordings`
+The script will record the audio loopback (of the speakers and microphone-input) and store it in files of 6s length to `./recordings`
 
 <br>
 
