@@ -2,6 +2,7 @@ import sys
 import time
 import getopt
 import wave
+import os
 import alsaaudio
 
 path = './recordings/'
@@ -25,7 +26,9 @@ if __name__ == '__main__':
 
     if not args:
         usage()
-
+        
+    os.makedirs(os.path.dirname(path + rec_file), exist_ok=True)
+        
     f = open(path + rec_file, 'wb')
 
 	# Open the device in nonblocking capture mode in mono, with a sampling rate of 44100 Hz
