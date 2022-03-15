@@ -7,12 +7,14 @@ The script will record the audio loopback (of the speakers and microphone-input)
 ## Prequisites
 
 1. Make sure ALSA is installed on the system
-2. Activate `snd-aloop` kernel moduke for setting up loopback devices <br>
+2. Install `libasound2-dev` <br>
+    `$ sudo apt-get install -y libasound2-dev`
+3. Activate `snd-aloop` kernel moduke for setting up loopback devices <br>
     `$ sudo modprobe snd-aloop` <br>
     `$ arecord -l` will provide a list of the installed soundcards.<br>
     To activate the module on startup, insert it in `/etc/modules`.<br>
     The loopback card will then be card 0.
-3. Install `pyalsaaudio` python module <br>
+4. Install `pyalsaaudio` python module <br>
     `$ pip install pyalsaaudio`
 
 <br>

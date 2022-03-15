@@ -50,6 +50,7 @@ if __name__ == '__main__':
             if l:
                 f.write(data)
                 time.sleep(.001)
+                print(loops)
 
         with open(path + rec_file, "rb") as inp_f:
             data_conv = inp_f.read()
