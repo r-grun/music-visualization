@@ -4,3 +4,11 @@ https://stackoverflow.com/questions/48690984/portaudio-h-no-such-file-or-directo
 
 
 sudo apt install portaudio19-dev python3-pyaudio
+
+alsamixer aufrufen
+
+mit F4 auf [Capture] wechseln
+
+Volume auf 100% stellen
+
+mit ESC beenden

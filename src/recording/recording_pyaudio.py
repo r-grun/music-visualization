@@ -10,10 +10,11 @@ record_secs = 6 # seconds to record
 dev_index = 1 # device index found by list_audio_devices.py
 wav_output_filename = 'rec.wav' # name of .wav file
 
-audio = pyaudio.PyAudio()
+
 
 def record():
-    
+
+    audio = pyaudio.PyAudio()
 
     stream = audio.open(format = form_1,rate = sample_rate,channels = chans, \
                     input_device_index = dev_index,input = True, \
