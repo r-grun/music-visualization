@@ -8,7 +8,7 @@ sample_rate = 44100 # 44.1kHz sampling rate
 chunk = 4096 # 2^12 samples for buffer
 record_secs = 6 # seconds to record
 dev_index = 1 # device index found by list_audio_devices.py
-wav_output_filename = 'rec.wav' # name of .wav file
+wav_output_filename = 'recordings/rec.wav' # name of .wav file
 
 
 
