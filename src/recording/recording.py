@@ -43,6 +43,5 @@ def record():
 
 
 if __name__ == '__main__':
-    # TODO uncomment
-    # while True:
+    while True:
         record()
