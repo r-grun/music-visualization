@@ -20,15 +20,12 @@ def record():
                     input_device_index = dev_index,input = True, \
                     frames_per_buffer=chunk)
 
-    print("recording...")
     frames = []
 
     # loop through stream and append audio chunks to frame array
     for ii in range(0,int((sample_rate/chunk)*record_secs)):
         data = stream.read(chunk)
         frames.append(data)
-
-    print("finished recording...")
 
     stream.stop_stream()
     stream.close()
@@ -41,10 +38,11 @@ def record():
     wavefile.writeframes(b''.join(frames))
     wavefile.close()
 
-    print('wav file saved.')
+    print('rec.wav file saved.')
 
 
 
 if __name__ == '__main__':
-    while True:
+    # TODO uncomment
+    # while True:
         record()
