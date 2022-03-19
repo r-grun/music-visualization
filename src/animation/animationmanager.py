@@ -3,6 +3,7 @@ from os import walk
 import time
 import pandas as pd
 from colormath.color_objects import sRGBColor
+import redis
 
 ### Data types
 Vector = list[int]
@@ -19,6 +20,7 @@ animations = []
 current_animation = []
 global_animation_counter = 0
 current_animation_counter = 0
+redis = redis.Redis(host='172.28.1.4', port=6379, db=0)
 
 
 
@@ -81,16 +83,31 @@ def convert_key_to_rbg(key) -> sRGBColor:
 
 
 
-
 def read_music_extractors() -> Vector:
     """
         Imports the music extractors from the cache.
+        Maps the values to fit to further computations.
         Returns [vol: int, bpm: int, key: str]
     """
 
-    # TODO: implement
+    bpm_cached = redis.get('bpm') # bpm values
+    vol_cached = redis.get('vol') # values from 0 to 15
+    key_cached = redis.get('key')
+    scale_cached = redis.get('scale')
+    
+    # Re-map cached volume value to 0 - 255
+    vol_cached_min = 0
+    vol_cached_max = 15
+    vol_min = 0
+    vol_max = 255
+    vol = ((vol_cached - vol_cached_min) / (vol_cached_max - vol_cached_min)) * (vol_max - vol_min) + vol_min
+    vol = 255 if vol > 255 else int(vol)
 
-    return (255, 120, 'C')
+    # Re-map key and scale to suit the shortened version
+    key = key_cached + ('m' if scale_cached == 'minor' else '')
+
+
+    return (vol, bpm_cached, key)
 
 
 
