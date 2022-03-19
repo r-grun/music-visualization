@@ -7,7 +7,7 @@ file_name = 'recordings/rec.wav'
 redis = redis.Redis(host='172.28.1.4', port=6379, db=0)
 
 
-def save_to_db(bpm, vol, key) -> None:
+def save_to_db(bpm, vol, key, scale) -> None:
     """
         Saves the omitted values to the redis db
     """
@@ -20,6 +20,9 @@ def save_to_db(bpm, vol, key) -> None:
 
     redis.set('key', key)
     print('key (' + str(key) + ') written to redis.')
+
+    redis.set('scale', scale)
+    print('scale (' + str(scale) + ') written to redis.')
 
 
 def main():
@@ -53,14 +56,8 @@ def main():
     print('Key extracted.')
     
 
-    save_to_db(bpm, vol, str(key + ' ' + scale))
+    save_to_db(bpm, vol, key, scale)
 
-
-    # For testing only
-    # writer = es.MonoWriter(filename='rec_cleaned.wav', format='wav', sampleRate=sample_rate)
-    # writer(audio)
-
-    # print('File saved.')
 
 
 
