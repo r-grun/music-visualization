@@ -1,28 +1,26 @@
-import soundcard as sc
+from fileinput import filename
 import numpy as np
-from scipy.special import softmax
-from essentia import Pool, run, reset
-from essentia.streaming import (
-    VectorInput,
-    FrameCutter,
-    RhythmExtractor2013
-)
+import essentia.standard as es
 
-def save_to_db(bpm, vol, key):
+file_name = 'rec.wav'
+
+
+def save_to_db(bpm, vol, key) -> None:
+    """
+        Saves the omitted values to the db
+    """
+
+    # TODO: implement
+
+    print('bpm: ' + str(bpm))
+    print('vol: ' + str(vol))
+    print('key: ' + str(key))
     pass
 
 
-def callback_console(data, buffer, pool, vimp):
-    buffer[:] = data.flatten()
-
-    # Generate predictions.
-    reset(vimp)
-    run(vimp)
-    
-    print(pool['bpm'])
-
-
 def main():
+
+    print('Analyzer started.')
 
     sample_rate = 44100
     frame_size = 512 
@@ -33,33 +31,33 @@ def main():
     buffer_size = patch_size * hop_size * length_factor
 
 
-    # Configure algorithms
-    buffer = np.zeros(buffer_size, dtype='float32')
-    vimp = VectorInput(buffer)
-    # fc = FrameCutter(frameSize=frame_size, hopSize=hop_size)
-    extractor = RhythmExtractor2013()
-    pool = Pool()
+    # Loading an audio file.
+    audio = es.EasyLoader(filename=file_name, sampleRate = sample_rate)() # try MonoLoader, EqloudLoader
+    print(file_name + ' loaded.')
+
+    # Compute beat positions and BPM.
+    rhythm_extractor = es.RhythmExtractor2013(method="multifeature")
+    bpm, _, _, _, _ = rhythm_extractor(audio)
+    print('Rhythm extracted.')
+
+    loudness_extractor = es.Loudness()
+    vol = loudness_extractor(audio)
+    print('Loudness extracted.')
+
+    key_extractor = es.KeyExtractor(sampleRate = sample_rate)
+    key, scale, _ = key_extractor(audio)
+    print('Key extracted.')
+    
+
+    save_to_db(bpm, vol, str(key + ' ' + scale))
 
 
-    # Configure network
-    # vimp.data   >>  fc.signal
-    # fc.frame    >>  extractor.signal
-    vimp.data   >>  extractor.signal
-    extractor.bpm     >>  (pool, 'bpm')
-    extractor.ticks     >>  (pool, 'ticks')
-    extractor.confidence     >>  (pool, 'confidence')
-    extractor.estimates     >>  (pool, 'estimates')
-    extractor.bpmIntervals     >>  (pool, 'bpmIntervals')
+    # For testing only
 
+    writer = es.MonoWriter(filename='rec_cleaned.wav', format='wav', sampleRate=sample_rate)
+    writer(audio)
 
-
-    pool.clear()
-
-    # Capture and process the speakers loopback.
-    with sc.all_microphones(include_loopback=True)[0].recorder(samplerate=sample_rate) as mic:
-        while True:
-            callback_console(mic.record(numframes=buffer_size).mean(axis=1), buffer, pool, vimp)
-
+    print('File saved.')
 
 
 
