@@ -1,21 +1,25 @@
-from fileinput import filename
 import numpy as np
 import essentia.standard as es
+import redis
 
-file_name = 'rec.wav'
+file_name = 'recordings/rec.wav'
+
+redis = redis.Redis(host='172.28.1.4', port=6379, db=0)
 
 
 def save_to_db(bpm, vol, key) -> None:
     """
-        Saves the omitted values to the db
+        Saves the omitted values to the redis db
     """
 
-    # TODO: implement
+    redis.set('bpm', bpm)
+    print('bpm (' + str(bpm) + ') written to redis.')
 
-    print('bpm: ' + str(bpm))
-    print('vol: ' + str(vol))
-    print('key: ' + str(key))
-    pass
+    redis.set('vol', vol)
+    print('vol (' + str(vol) + ') written to redis.')
+
+    redis.set('key', key)
+    print('key (' + str(key) + ') written to redis.')
 
 
 def main():
@@ -53,11 +57,10 @@ def main():
 
 
     # For testing only
+    # writer = es.MonoWriter(filename='rec_cleaned.wav', format='wav', sampleRate=sample_rate)
+    # writer(audio)
 
-    writer = es.MonoWriter(filename='rec_cleaned.wav', format='wav', sampleRate=sample_rate)
-    writer(audio)
-
-    print('File saved.')
+    # print('File saved.')
 
 
 
