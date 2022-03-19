@@ -15,7 +15,7 @@ RUN apt-get update \
     libfftw3-dev libavcodec-dev libavformat-dev libavresample-dev \
     libsamplerate0-dev libtag1-dev libyaml-dev libchromaprint-dev \
     && mkdir /essentia && cd /essentia && git clone https://github.com/MTG/essentia.git \
-    && cd /essentia/essentia && git checkout v2.1_beta5 && python3 waf configure --with-python --with-examples --with-vamp --no-msse \
+    && cd /essentia/essentia && git checkout v2.1_beta5 && python3 waf configure --with-python --with-vamp --no-msse \
     && python3 waf && python3 waf install && ldconfig \
     &&  apt-get remove -y build-essential libyaml-dev libfftw3-dev libavcodec-dev \
         libavformat-dev libavutil-dev libavresample-dev python-dev libsamplerate0-dev \
@@ -28,13 +28,11 @@ RUN apt-get update \
 RUN apt-get update \ 
     && apt-get install -y python3-pip
 
-RUN python3 -m pip install soundcard
+RUN pip install redis
 
 ENV PYTHONPATH /usr/local/lib/python3/dist-packages
 
 WORKDIR /essentia
-
-RUN export PULSE_SERVER=tcp:127.0.0.1
 
 ##################################
 ### COPY OWN ANALYZATION-FILES ###
