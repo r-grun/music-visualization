@@ -5,14 +5,15 @@ services:
   redis:
     image: "redis:alpine"
 
-    command: redis-server --requirepass sOmE_sEcUrE_pAsS
+    container_name: music-cache
+
+    command: redis-server /usr/local/etc/redis/redis.conf
 
     ports:
       - "6379:6379"
 
     volumes:
-      - $PWD/redis-data:/var/lib/redis
-      - $PWD/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
 
     environment:
       - REDIS_REPLICATION_MODE=master
@@ -22,18 +23,36 @@ services:
         ipv4_address: 172.28.1.4
 
   analyzer:
-    image: "rgrun/music-analyzer"
+    image: "rgrun/music-analyzer-raspberrypi"
 
-    devices:
-      - "/dev/snd:/dev/snd"
+    container_name: music-analyzer
+
+    volumes:
+      - ./recording/recordings:/essentia/recordings:ro
+
+    links:
+      - "redis"
 
     command: python3 analyzer.py
+
+    networks:
+      node_net:
+        ipv4_address: 172.28.1.5
 
 
   animation:
     image: "rgrun/music-animation"
 
+    container_name: music-animation
+
+    links:
+      - "redis"
+
     command: python3 animationmanager.py
+
+    networks:
+      node_net:
+        ipv4_address: 172.28.1.6
 
 
 # networking for the Redis container
