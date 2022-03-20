@@ -29,7 +29,7 @@ global_animation_counter = 0
 current_animation_counter = 0
 
 ### Global objects
-strip
+strip = None
 
 
 
@@ -118,6 +118,7 @@ def show_leds(led_config = []) -> None:
         Shows the passed configuration on the hardware.
         The length of the configuration has to be the size of the LED strip.
     """
+    global strip
 
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, Color(led_config[i].rgb_r, led_config[i].rgb_g, led_config[i].rgb_b))
