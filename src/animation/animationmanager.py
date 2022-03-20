@@ -4,6 +4,7 @@ import time
 import pandas as pd
 from colormath.color_objects import sRGBColor
 import redis
+from rpi_ws281x import PixelStrip, Color
 
 ### Data types
 Vector = list[int]
@@ -13,6 +14,13 @@ Vector = list[int]
 ANIMATIONS_PATH = './matrices/'
 KEY_COLORS_FILE = 'key_colors.txt'
 KEY_COLORS = []
+LED_COUNT = 44          # Number of LED pixels.
+LED_PIN = 18            # GPIO pin connected to the pixels (18 uses PWM!).
+LED_FREQ_HZ = 800000    # LED signal frequency in hertz (usually 800khz)
+LED_DMA = 10            # DMA channel to use for generating signal (try 10)
+LED_BRIGHTNESS = 255    # Set to 0 for darkest and 255 for brightest
+LED_INVERT = False      # True to invert the signal (when using NPN transistor level shift)
+LED_CHANNEL = 0         # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 
 ### Global variables
@@ -20,7 +28,10 @@ animations = []
 current_animation = []
 global_animation_counter = 0
 current_animation_counter = 0
-redis = redis.Redis(host='172.28.1.4', port=6379, db=0)
+
+### Global objects
+cache
+strip
 
 
 
@@ -90,10 +101,10 @@ def read_music_extractors() -> Vector:
         Returns [vol: int, bpm: int, key: str]
     """
 
-    bpm_cached = redis.get('bpm') # bpm values
-    vol_cached = redis.get('vol') # values from 0 to 15
-    key_cached = redis.get('key')
-    scale_cached = redis.get('scale')
+    bpm_cached = cache.get('bpm') # bpm values
+    vol_cached = cache.get('vol') # values from 0 to 15
+    key_cached = cache.get('key')
+    scale_cached = cache.get('scale')
     
     # Re-map cached volume value to 0 - 255
     vol_cached_min = 0
@@ -110,12 +121,25 @@ def read_music_extractors() -> Vector:
     return (vol, bpm_cached, key)
 
 
+def colorWipe(strip, color, wait_ms=50):
+    """
+        Wipe color across display a pixel at a time.
+    """
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, color)
+        strip.show()
+
 
 def show_leds(led_config = []) -> None:
     """
         Shows the passed configuration on the hardware.
         The length of the configuration has to be the size of the LED strip.
     """
+
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, Color(led_config[i].rgb_r, led_config[i].rgb_g, led_config[i].rgb_b))
+        strip.show()
+
 
     # TODO: implement
     print(led_config)
@@ -160,31 +184,44 @@ def pause_animation(bpm) -> None:
 
 
 def main():
-    global current_animation_counter, current_animation, global_animation_counter, animations
+    global current_animation_counter, current_animation, global_animation_counter, animations, strip, cache
+
+    # Create redis onject
+    cache = redis.Redis(host='172.28.1.4', port=6379, db=0)
+
+    # Create NeoPixel object with appropriate configuration.
+    strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
+    # Intialize the library (must be called once before other functions).
+    strip.begin()
 
     load_matrices()
     load_key_colors()
 
-    while True:
+    try:
 
-        current_animation = animations[global_animation_counter]
+        while True:
 
-        while current_animation_counter < len(current_animation):
-            vol, bpm, key = read_music_extractors()
-            current_state = current_animation[current_animation_counter]
-            adapted_current_state = add_extractors_to_animation_state(vol, key, current_state)
-            show_leds(adapted_current_state)
+            current_animation = animations[global_animation_counter]
 
-            current_animation_counter += 1
-            if (current_animation_counter >= len(current_animation)):
-                current_animation_counter = 0
+            while current_animation_counter < len(current_animation):
+                vol, bpm, key = read_music_extractors()
+                current_state = current_animation[current_animation_counter]
+                adapted_current_state = add_extractors_to_animation_state(vol, key, current_state)
+                show_leds(adapted_current_state)
 
-            pause_animation(bpm)
-            
+                current_animation_counter += 1
+                if (current_animation_counter >= len(current_animation)):
+                    current_animation_counter = 0
 
-        global_animation_counter += 1
-        if (global_animation_counter >= len(animations)):
-            global_animation_counter = 0
+                pause_animation(bpm)
+                
+
+            global_animation_counter += 1
+            if (global_animation_counter >= len(animations)):
+                global_animation_counter = 0
+
+    except KeyboardInterrupt:
+        colorWipe(strip, Color(0, 0, 0), 10)
         
 
 
