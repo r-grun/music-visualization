@@ -3,7 +3,6 @@ from os import walk
 import time
 import pandas as pd
 from colormath.color_objects import sRGBColor
-import redis
 from rpi_ws281x import PixelStrip, Color
 
 ### Data types
@@ -30,7 +29,6 @@ global_animation_counter = 0
 current_animation_counter = 0
 
 ### Global objects
-cache
 strip
 
 
@@ -96,30 +94,12 @@ def convert_key_to_rbg(key) -> sRGBColor:
 
 def read_music_extractors() -> Vector:
     """
+        TEST IMPLEMENTATION!
         Imports the music extractors from the cache.
         Maps the values to fit to further computations.
         Returns [vol: int, bpm: int, key: str]
     """
 
-    bpm_cached = cache.get('bpm') # bpm values
-    vol_cached = cache.get('vol') # values from 0 to 15
-    key_cached = cache.get('key')
-    scale_cached = cache.get('scale')
-    
-    # Re-map cached volume value to 0 - 255
-    vol_cached_min = 0
-    vol_cached_max = 15
-    vol_min = 0
-    vol_max = 255
-    vol = ((vol_cached - vol_cached_min) / (vol_cached_max - vol_cached_min)) * (vol_max - vol_min) + vol_min
-    vol = 255 if vol > 255 else int(vol)
-
-    # Re-map key and scale to suit the shortened version
-    key = key_cached + ('m' if scale_cached == 'minor' else '')
-
-
-    # TODO: uncomment
-    # return (vol, bpm_cached, key)
     return (11, 124, 'C')
 
 
@@ -183,10 +163,7 @@ def pause_animation(bpm) -> None:
 
 
 def main():
-    global current_animation_counter, current_animation, global_animation_counter, animations, strip, cache
-
-    # Create redis onject
-    cache = redis.Redis(host='172.28.1.4', port=6379, db=0)
+    global current_animation_counter, current_animation, global_animation_counter, animations, strip
 
     # Create NeoPixel object with appropriate configuration.
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
@@ -222,13 +199,6 @@ def main():
     except KeyboardInterrupt:
         colorWipe(strip, Color(0, 0, 0), 10)
         
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
