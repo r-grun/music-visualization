@@ -142,10 +142,9 @@ def show_leds(strip, led_config = []) -> None:
         color = Color(int(led_config[i].rgb_r), int(led_config[i].rgb_g), int(led_config[i].rgb_b))
         # TODO: test remove
         # color = (int(led_config[i].rgb_r), int(led_config[i].rgb_g), int(led_config[i].rgb_b))
-        print(color)
         strip.setPixelColor(i, color)
         
-    strip.show()
+        strip.show()
 
 
 
