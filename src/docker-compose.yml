@@ -33,7 +33,7 @@ services:
     links:
       - "redis"
 
-    command: python3 analyzer.py
+    # command: python3 analyzer.py
 
     networks:
       node_net:
@@ -50,7 +50,7 @@ services:
     links:
       - "redis"
 
-    command: python3 animationmanager.py
+    # command: python3 animationmanager.py
 
     networks:
       node_net:
