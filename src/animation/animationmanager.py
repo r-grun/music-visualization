@@ -193,7 +193,7 @@ def main():
 
     # Create redis instance
     # TODO: uncomment
-    cache = redis.Redis(host='172.28.1.4', port=6379, db=0)
+    # cache = redis.Redis(host='172.28.1.4', port=6379, db=0)
 
     # Create NeoPixel object with appropriate configuration.
     # TODO: uncomment
@@ -214,9 +214,9 @@ def main():
             current_animation = animations[global_animation_counter]
 
             while current_animation_counter < len(current_animation):
-                vol, bpm, key = read_music_extractors(cache)
+                # vol, bpm, key = read_music_extractors(cache)
                 # TODO: remove
-                # vol, bpm, key = (140, 124, 'C')
+                vol, bpm, key = (140, 124, 'C')
                 current_state = current_animation[current_animation_counter]
                 adapted_current_state = add_extractors_to_animation_state(vol, key, current_state)
                 show_leds(strip, adapted_current_state)
