@@ -11,6 +11,8 @@ RUN pip install numpy colormath pandas
 
 RUN pip install redis
 
+RUN pip install adafruit-circuitpython-neopixel
+
 WORKDIR /animation
 
 COPY . .
