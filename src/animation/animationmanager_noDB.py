@@ -28,10 +28,6 @@ current_animation = []
 global_animation_counter = 0
 current_animation_counter = 0
 
-### Global objects
-strip = None
-
-
 
 def load_matrices() -> None:
     """
@@ -114,12 +110,11 @@ def colorWipe(strip, color, wait_ms=50):
         strip.show()
 
 
-def show_leds(led_config = []) -> None:
+def show_leds(strip, led_config = []) -> None:
     """
         Shows the passed configuration on the hardware.
         The length of the configuration has to be the size of the LED strip.
     """
-    global strip
 
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, Color(int(led_config[i].rgb_r), int(led_config[i].rgb_g), int(led_config[i].rgb_b)))
@@ -186,7 +181,7 @@ def main():
                 print(vol, bpm, key)
                 current_state = current_animation[current_animation_counter]
                 adapted_current_state = add_extractors_to_animation_state(vol, key, current_state)
-                show_leds(adapted_current_state)
+                show_leds(strip, adapted_current_state)
 
                 current_animation_counter += 1
                 if (current_animation_counter >= len(current_animation)):
