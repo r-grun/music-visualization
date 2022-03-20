@@ -61,6 +61,7 @@ def load_key_colors() -> None:
         print('Importing key color matrix...')
 
         KEY_COLORS = pd.read_csv(KEY_COLORS_FILE, dtype='str', sep=' ', header=None).to_numpy()
+        print('Key color matrix imported.')
     except IOError:
         print('Key color mappings could not be loaded.')
         raise
