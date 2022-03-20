@@ -158,7 +158,8 @@ def add_extractors_to_animation_state(vol, key, animation_state = []) -> list:
     current_color = convert_key_to_rbg(key)
 
     for state in animation_state:
-        r, g, b = sRGBColor.new_from_rgb_hex(state).get_upscaled_value_tuple()
+        rgb_downscaled = sRGBColor.new_from_rgb_hex(state)
+        r, g, b = rgb_downscaled.get_upscaled_value_tuple()
         rgb_state = sRGBColor(r, g, b, is_upscaled=True)
         rgb_state.rgb_r = current_color.rgb_r *  (rgb_state.rgb_r / 255 ) * rel_vol
         rgb_state.rgb_g = current_color.rgb_g *  (rgb_state.rgb_g / 255 ) * rel_vol
