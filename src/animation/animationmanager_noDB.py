@@ -63,6 +63,7 @@ def load_key_colors() -> None:
         print('Importing key color matrix...')
 
         KEY_COLORS = pd.read_csv(KEY_COLORS_FILE, dtype='str', sep=' ', header=None).to_numpy()
+        print('Key color matrix imported.')
     except IOError:
         print('Key color mappings could not be loaded.')
         raise
@@ -182,6 +183,7 @@ def main():
 
             while current_animation_counter < len(current_animation):
                 vol, bpm, key = read_music_extractors()
+                print(vol, bpm, key)
                 current_state = current_animation[current_animation_counter]
                 adapted_current_state = add_extractors_to_animation_state(vol, key, current_state)
                 show_leds(adapted_current_state)
