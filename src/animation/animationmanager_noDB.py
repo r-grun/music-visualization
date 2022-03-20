@@ -117,7 +117,9 @@ def show_leds(strip, led_config = []) -> None:
     """
 
     for i in range(strip.numPixels()):
-        strip.setPixelColor(i, Color(int(led_config[i].rgb_r), int(led_config[i].rgb_g), int(led_config[i].rgb_b)))
+        color = Color(int(led_config[i].rgb_r), int(led_config[i].rgb_g), int(led_config[i].rgb_b))
+        print(color)
+        strip.setPixelColor(i, color)
         strip.show()
 
 
@@ -178,7 +180,6 @@ def main():
 
             while current_animation_counter < len(current_animation):
                 vol, bpm, key = read_music_extractors()
-                print(vol, bpm, key)
                 current_state = current_animation[current_animation_counter]
                 adapted_current_state = add_extractors_to_animation_state(vol, key, current_state)
                 show_leds(strip, adapted_current_state)
