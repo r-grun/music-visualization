@@ -1,5 +1,6 @@
 import pyaudio
 import wave
+import subprocess
 
 
 form_1 = pyaudio.paInt16 # 16-bit resolution
@@ -10,6 +11,9 @@ record_secs = 6 # seconds to record
 dev_index = 1 # device index found by list_audio_devices.py
 wav_output_filename = 'recordings/rec.wav' # name of .wav file
 
+
+def trigger_analyzer():
+    subprocess.call(['docker', 'exec', '-it', 'music-analyzer', 'python3', 'analyzer.py'], shell=True)
 
 
 def record():
@@ -39,9 +43,14 @@ def record():
     wavefile.close()
 
     print('rec.wav file saved.')
+    trigger_analyzer()
 
 
 
 if __name__ == '__main__':
-    while True:
-        record()
+
+    try:
+        while True:
+            record()
+    except KeyboardInterrupt:
+        pass
