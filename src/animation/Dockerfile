@@ -9,6 +9,8 @@ RUN apt-get install python3-dev python3-pip
 
 RUN pip install numpy colormath pandas
 
+RUN pip install redis
+
 WORKDIR /animation
 
 COPY . .
