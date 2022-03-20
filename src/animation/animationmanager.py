@@ -134,9 +134,13 @@ def show_leds(strip, led_config = []) -> None:
         Shows the passed configuration on the hardware.
         The length of the configuration has to be the size of the LED strip.
     """
-
+    # TODO: uncomment
     for i in range(strip.numPixels()):
+    # for i in range(44):
+        # TODO: uncomment
         color = Color(int(led_config[i].rgb_r), int(led_config[i].rgb_g), int(led_config[i].rgb_b))
+        # TODO: test remove
+        # color = (int(led_config[i].rgb_r), int(led_config[i].rgb_g), int(led_config[i].rgb_b))
         print(color)
         strip.setPixelColor(i, color)
         
@@ -155,15 +159,15 @@ def add_extractors_to_animation_state(vol, key, animation_state = []) -> list:
     converted_animation_state = []
     rel_vol = vol / 255
 
-    current_color = convert_key_to_rbg(key)
+    current_color_tuple = convert_key_to_rbg(key).get_upscaled_value_tuple() # (r, g, b)
 
     for state in animation_state:
         rgb_downscaled = sRGBColor.new_from_rgb_hex(state)
-        r, g, b = rgb_downscaled.get_upscaled_value_tuple()
-        rgb_state = sRGBColor(r, g, b, is_upscaled=True)
-        rgb_state.rgb_r = current_color.rgb_r *  (rgb_state.rgb_r / 255 ) * rel_vol
-        rgb_state.rgb_g = current_color.rgb_g *  (rgb_state.rgb_g / 255 ) * rel_vol
-        rgb_state.rgb_b = current_color.rgb_b *  (rgb_state.rgb_b / 255 ) * rel_vol
+        rgb_state_tuple = rgb_downscaled.get_upscaled_value_tuple() # (r, g, b)
+        rgb_state = sRGBColor(rgb_state_tuple[0], rgb_state_tuple[1], rgb_state_tuple[2], is_upscaled=True)
+        rgb_state.rgb_r = current_color_tuple[0] *  (rgb_state_tuple[0] / 255 ) * rel_vol
+        rgb_state.rgb_g = current_color_tuple[1] *  (rgb_state_tuple[1] / 255 ) * rel_vol
+        rgb_state.rgb_b = current_color_tuple[2] *  (rgb_state_tuple[2] / 255 ) * rel_vol
         converted_animation_state.append(rgb_state)
 
 
@@ -188,12 +192,16 @@ def main():
 
     # Create redis instance
     # TODO: uncomment
-    # cache = redis.Redis(host='172.28.1.4', port=6379, db=0)
+    cache = redis.Redis(host='172.28.1.4', port=6379, db=0)
 
     # Create NeoPixel object with appropriate configuration.
+    # TODO: uncomment
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     # Intialize the library (must be called once before other functions).
+    # TODO: uncomment
     strip.begin()
+    # TODO: test remove
+    # strip = ()
 
     load_matrices()
     load_key_colors()
@@ -205,9 +213,9 @@ def main():
             current_animation = animations[global_animation_counter]
 
             while current_animation_counter < len(current_animation):
-                # vol, bpm, key = read_music_extractors(cache)
+                vol, bpm, key = read_music_extractors(cache)
                 # TODO: remove
-                vol, bpm, key = (11, 124, 'C')
+                # vol, bpm, key = (140, 124, 'C')
                 current_state = current_animation[current_animation_counter]
                 adapted_current_state = add_extractors_to_animation_state(vol, key, current_state)
                 show_leds(strip, adapted_current_state)
@@ -224,7 +232,9 @@ def main():
                 global_animation_counter = 0
 
     except KeyboardInterrupt:
+        # TODO: uncomment
         colorWipe(strip, Color(0, 0, 0), 10)
+        pass
         
 
 
