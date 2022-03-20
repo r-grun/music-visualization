@@ -121,7 +121,7 @@ def show_leds(led_config = []) -> None:
     global strip
 
     for i in range(strip.numPixels()):
-        strip.setPixelColor(i, Color(led_config[i].rgb_r, led_config[i].rgb_g, led_config[i].rgb_b))
+        strip.setPixelColor(i, Color(int(led_config[i].rgb_r), int(led_config[i].rgb_g), int(led_config[i].rgb_b)))
         strip.show()
 
 
