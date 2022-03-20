@@ -135,16 +135,11 @@ def show_leds(strip, led_config = []) -> None:
         Shows the passed configuration on the hardware.
         The length of the configuration has to be the size of the LED strip.
     """
-    # TODO: uncomment
     for i in range(strip.numPixels()):
-    # for i in range(44):
-        # TODO: uncomment
         color = Color(int(led_config[i].rgb_r), int(led_config[i].rgb_g), int(led_config[i].rgb_b))
-        # TODO: test remove
-        # color = (int(led_config[i].rgb_r), int(led_config[i].rgb_g), int(led_config[i].rgb_b))
         strip.setPixelColor(i, color)
         
-        strip.show()
+    strip.show()
 
 
 
@@ -198,10 +193,7 @@ def main():
     # TODO: uncomment
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     # Intialize the library (must be called once before other functions).
-    # TODO: uncomment
     strip.begin()
-    # TODO: test remove
-    # strip = ()
 
     load_matrices()
     load_key_colors()
@@ -232,7 +224,6 @@ def main():
                 global_animation_counter = 0
 
     except KeyboardInterrupt:
-        # TODO: uncomment
         colorWipe(strip, Color(0, 0, 0), 10)
         pass
         
