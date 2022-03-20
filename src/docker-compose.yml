@@ -41,7 +41,7 @@ services:
 
 
   animation:
-    image: "rgrun/music-animation"
+    image: "rgrun/music-visualizer-raspberrypi"
 
     container_name: music-animation
 
