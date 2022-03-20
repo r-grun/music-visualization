@@ -124,7 +124,9 @@ def colorWipe(strip, color, wait_ms=50):
     """
     for i in range(strip.numPixels()):
         strip.setPixelColor(i, color)
-        strip.show()
+        
+    strip.show()
+
 
 
 def show_leds(strip, led_config = []) -> None:
@@ -134,8 +136,11 @@ def show_leds(strip, led_config = []) -> None:
     """
 
     for i in range(strip.numPixels()):
-        strip.setPixelColor(i, Color(led_config[i].rgb_r, led_config[i].rgb_g, led_config[i].rgb_b))
-        strip.show()
+        color = Color(int(led_config[i].rgb_r), int(led_config[i].rgb_g), int(led_config[i].rgb_b))
+        print(color)
+        strip.setPixelColor(i, color)
+        
+    strip.show()
 
 
 
