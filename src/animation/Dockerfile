@@ -10,7 +10,7 @@ RUN pip install numpy colormath pandas
 
 RUN pip install redis
 
-RUN pip install adafruit-circuitpython-neopixel
+RUN pip install rpi_ws281x
 
 WORKDIR /animation
 
