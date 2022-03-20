@@ -29,10 +29,6 @@ current_animation = []
 global_animation_counter = 0
 current_animation_counter = 0
 
-### Global objects
-cache
-strip
-
 
 
 def load_matrices() -> None:
@@ -94,7 +90,7 @@ def convert_key_to_rbg(key) -> sRGBColor:
 
 
 
-def read_music_extractors() -> Vector:
+def read_music_extractors(cache) -> Vector:
     """
         Imports the music extractors from the cache.
         Maps the values to fit to further computations.
@@ -118,9 +114,7 @@ def read_music_extractors() -> Vector:
     key = key_cached + ('m' if scale_cached == 'minor' else '')
 
 
-    # TODO: uncomment
-    # return (vol, bpm_cached, key)
-    return (11, 124, 'C')
+    return (vol, bpm_cached, key)
 
 
 
@@ -133,7 +127,7 @@ def colorWipe(strip, color, wait_ms=50):
         strip.show()
 
 
-def show_leds(led_config = []) -> None:
+def show_leds(strip, led_config = []) -> None:
     """
         Shows the passed configuration on the hardware.
         The length of the configuration has to be the size of the LED strip.
@@ -159,7 +153,8 @@ def add_extractors_to_animation_state(vol, key, animation_state = []) -> list:
     current_color = convert_key_to_rbg(key)
 
     for state in animation_state:
-        rgb_state = sRGBColor.new_from_rgb_hex(state)
+        r, g, b = sRGBColor.new_from_rgb_hex(state).get_upscaled_value_tuple()
+        rgb_state = sRGBColor(r, g, b, is_upscaled=True)
         rgb_state.rgb_r = current_color.rgb_r *  (rgb_state.rgb_r / 255 ) * rel_vol
         rgb_state.rgb_g = current_color.rgb_g *  (rgb_state.rgb_g / 255 ) * rel_vol
         rgb_state.rgb_b = current_color.rgb_b *  (rgb_state.rgb_b / 255 ) * rel_vol
@@ -183,10 +178,11 @@ def pause_animation(bpm) -> None:
 
 
 def main():
-    global current_animation_counter, current_animation, global_animation_counter, animations, strip, cache
+    global current_animation_counter, current_animation, global_animation_counter, animations, strip
 
-    # Create redis onject
-    cache = redis.Redis(host='172.28.1.4', port=6379, db=0)
+    # Create redis instance
+    # TODO: uncomment
+    # cache = redis.Redis(host='172.28.1.4', port=6379, db=0)
 
     # Create NeoPixel object with appropriate configuration.
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
@@ -203,10 +199,12 @@ def main():
             current_animation = animations[global_animation_counter]
 
             while current_animation_counter < len(current_animation):
-                vol, bpm, key = read_music_extractors()
+                # vol, bpm, key = read_music_extractors(cache)
+                # TODO: remove
+                vol, bpm, key = (11, 124, 'C')
                 current_state = current_animation[current_animation_counter]
                 adapted_current_state = add_extractors_to_animation_state(vol, key, current_state)
-                show_leds(adapted_current_state)
+                show_leds(strip, adapted_current_state)
 
                 current_animation_counter += 1
                 if (current_animation_counter >= len(current_animation)):
