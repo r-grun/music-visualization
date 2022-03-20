@@ -45,6 +45,8 @@ services:
 
     container_name: music-animation
 
+    privileged: true
+
     links:
       - "redis"
 
