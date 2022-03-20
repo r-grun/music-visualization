@@ -86,7 +86,7 @@ def convert_key_to_rbg(key) -> sRGBColor:
     else:
         index = np.where(KEY_COLORS[1] == key)[0][0]
     
-    return sRGBColor(KEY_COLORS[2][index], KEY_COLORS[3][index], KEY_COLORS[4][index], is_upscaled=True)
+    return sRGBColor(float(KEY_COLORS[2][index]), float(KEY_COLORS[3][index]), float(KEY_COLORS[4][index]), is_upscaled=True)
 
 
 
