@@ -172,13 +172,12 @@ def pause_animation(bpm, begin_animation_time, current_animation_length) -> None
         begin_animation_time is a timestamp in nanoseconds
     """
 
-    # try:
-    end_animation_time = time.time_ns()
-    animation_time_diff = (end_animation_time - begin_animation_time)  / (10 ** 9) # convert to seconds
-    time.sleep(60 / bpm / len(current_animation_length) - animation_time_diff)
-    # except:
-    #     print('Could not pause properly.')
-    #     pass
+    try:
+        end_animation_time = time.time_ns()
+        animation_time_diff = (end_animation_time - begin_animation_time)  / (10 ** 9) # convert to seconds
+        time.sleep(60 / bpm / current_animation_length + animation_time_diff)
+    except:
+        print('Could not pause properly.')
 
 
 
