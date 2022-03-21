@@ -25,9 +25,6 @@ LED_CHANNEL = 0         # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 ### Global variables
 animations = []
-current_animation = []
-global_animation_counter = 0
-current_animation_counter = 0
 
 
 
@@ -169,7 +166,7 @@ def add_extractors_to_animation_state(vol, key, animation_state = []) -> list:
     return converted_animation_state
 
 
-def pause_animation(bpm, begin_animation_time) -> None:
+def pause_animation(bpm, begin_animation_time, current_animation_length) -> None:
     """
         Pauses the execution based on the passed bpm and begin_animation_time.
         begin_animation_time is a timestamp in nanoseconds
@@ -177,7 +174,7 @@ def pause_animation(bpm, begin_animation_time) -> None:
 
     try:
         animation_time_diff = (time.time_ns() - begin_animation_time)  / (10 ** 9)# in seconds
-        time.sleep(60 / bpm / len(current_animation) - animation_time_diff)
+        time.sleep(60 / bpm / len(current_animation_length) - animation_time_diff)
     except:
         print('No BPM passed.')
         pass
@@ -185,7 +182,11 @@ def pause_animation(bpm, begin_animation_time) -> None:
 
 
 def main():
-    global current_animation_counter, current_animation, global_animation_counter, animations, strip
+    global animations
+
+    current_animation = []
+    global_animation_counter = 0
+    current_animation_counter = 0
 
     # Create redis instance
     cache = redis.Redis(host='172.28.1.4', port=6379, db=0)
@@ -203,6 +204,7 @@ def main():
         while True:
 
             current_animation = animations[global_animation_counter]
+            current_animation_counter = 0
 
             print('New animation started.')
 
@@ -216,13 +218,12 @@ def main():
                 show_leds(strip, adapted_current_state)
 
                 current_animation_counter += 1
-                if (current_animation_counter >= len(current_animation)):
-                    current_animation_counter = 0
 
-                pause_animation(bpm, t1)
+                pause_animation(bpm, t1, len(current_animation))
                 
+            
             print('Animation ended.')
-
+       
             global_animation_counter += 1
             if (global_animation_counter >= len(animations)):
                 global_animation_counter = 0
