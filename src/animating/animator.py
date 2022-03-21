@@ -68,10 +68,12 @@ def load_key_colors() -> None:
 def convert_key_to_rbg(key) -> sRGBColor:
     """
         Converts the key to a color based on the Newton Color principle.
-        The key is a string as 'Em' or 'F#'.
-        The first row contains the Major Chords.
-        The second row contains the Minor Chords.
-        Rows 3, 4, 5 contain the R, G, B Value of the Chord
+        The key is a string as 'Em', 'F#' or 'Gbm'.
+        Row 1 contains the Major Chords, written with '#'.
+        Row 2 contains the Minor Chords, written with '#'.
+        Row 3 contains the Major Chords, written with 'b'.
+        Row 4 contains the Minor Chords, written with 'b'.
+        Rows 5, 6, 7 contain the R, G, B Value of the Chord
         The returned Vector is a sRGBColor
     """
 
@@ -79,12 +81,18 @@ def convert_key_to_rbg(key) -> sRGBColor:
 
     index = 0
 
-    if (key[-1] != 'm'):
-        index = np.where(KEY_COLORS[0] == key)[0][0]
-    else:
-        index = np.where(KEY_COLORS[1] == key)[0][0]
+    if (key[1] == 'b'): # Chord is written as 'Gb' or 'Gbm'
+        if (key[-1] == 'm'):
+            index = np.where(KEY_COLORS[3] == key)[0][0]
+        else:
+            index = np.where(KEY_COLORS[2] == key)[0][0]
+    else: # Chord is written as 'F#' or 'F#m'
+        if (key[-1] == 'm'):
+            index = np.where(KEY_COLORS[1] == key)[0][0]
+        else:
+            index = np.where(KEY_COLORS[0] == key)[0][0]
     
-    return sRGBColor(float(KEY_COLORS[2][index]), float(KEY_COLORS[3][index]), float(KEY_COLORS[4][index]), is_upscaled=True)
+    return sRGBColor(float(KEY_COLORS[4][index]), float(KEY_COLORS[5][index]), float(KEY_COLORS[6][index]), is_upscaled=True)
 
 
 
