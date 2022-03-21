@@ -23,15 +23,14 @@ LED_INVERT = False      # True to invert the signal (when using NPN transistor l
 LED_CHANNEL = 0         # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 
-### Global variables
-animations = []
 
 
-
-def load_matrices() -> None:
+def load_matrices() -> list:
     """
     Loads all animation-matrices into the global animations list
     """
+
+    animations = []
 
     try:
         print('Importing animations...')
@@ -40,6 +39,7 @@ def load_matrices() -> None:
             animations.append(np.loadtxt(ANIMATIONS_PATH + file, dtype='str'))
 
         print(str(len(animations)) + ' animation(s) imported.')
+        return animations
     except IOError:
         print('No animations found.')
         raise
@@ -182,8 +182,6 @@ def pause_animation(bpm, begin_animation_time, current_animation_length) -> None
 
 
 def main():
-    global animations
-
     current_animation = []
     global_animation_counter = 0
     current_animation_counter = 0
@@ -196,7 +194,7 @@ def main():
     # Intialize the library (must be called once before other functions).
     strip.begin()
 
-    load_matrices()
+    animations = load_matrices()
     load_key_colors()
 
     try:
