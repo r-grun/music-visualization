@@ -98,10 +98,10 @@ def read_music_extractors(cache) -> Vector:
         Returns [vol: int, bpm: int, key: str]
     """
 
-    bpm_cached = cache.get('bpm') # bpm values
-    vol_cached = cache.get('vol') # values from 0 to 15
-    key_cached = cache.get('key')
-    scale_cached = cache.get('scale')
+    bpm_cached = int(float(cache.get('bpm'))) # bpm values
+    vol_cached = int(float(cache.get('vol'))) # values from 0 to 15
+    key_cached = (cache.get('key')).decode('utf-8')
+    scale_cached = (cache.get('scale')).decode('utf-8')
     
     # Re-map cached volume value to 0 - 255
     vol_cached_min = 0
