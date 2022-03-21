@@ -13,7 +13,7 @@ wav_output_filename = 'recordings/rec.wav' # name of .wav file
 
 
 def trigger_analyzer():
-    subprocess.call(['docker', 'exec', '-it', 'music-analyzer', 'python3', 'analyzer.py'], shell=True)
+    subprocess.call(['docker', 'start', 'music-analyzer'])
 
 
 def record():
