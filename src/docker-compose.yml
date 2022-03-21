@@ -46,7 +46,7 @@ services:
   animation:
     image: "rgrun/music-visualizer-raspberrypi"
 
-    container_name: music-animation
+    container_name: music-animator
 
     privileged: true
 
@@ -57,7 +57,7 @@ services:
     stdin_open: true
 
 
-    # command: python3 animationmanager.py
+    # command: python3 animator.py
 
     networks:
       node_net:
