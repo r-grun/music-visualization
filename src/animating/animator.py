@@ -176,8 +176,11 @@ def pause_animation(bpm, begin_animation_time, current_animation_length) -> None
         end_animation_time = time.time_ns()
         animation_time_diff = (end_animation_time - begin_animation_time)  / (10 ** 9) # convert to seconds
         time.sleep(60 / bpm / current_animation_length + animation_time_diff)
+    except KeyboardInterrupt:
+        exit()
     except:
         print('Could not pause properly.')
+    
 
 
 
