@@ -81,7 +81,7 @@ def convert_key_to_rbg(key) -> sRGBColor:
 
     index = 0
 
-    if (key[1] == 'b'): # Chord is written as 'Gb' or 'Gbm'
+    if (len(key) > 1 and key[1] == 'b'): # Chord is written as 'Gb' or 'Gbm'
         if (key[-1] == 'm'):
             index = np.where(KEY_COLORS[3] == key)[0][0]
         else:
