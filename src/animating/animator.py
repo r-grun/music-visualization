@@ -169,13 +169,15 @@ def add_extractors_to_animation_state(vol, key, animation_state = []) -> list:
     return converted_animation_state
 
 
-def pause_animation(bpm) -> None:
+def pause_animation(bpm, begin_animation_time) -> None:
     """
-        Pauses the execution based on the passed bpm
+        Pauses the execution based on the passed bpm and begin_animation_time.
+        begin_animation_time is a timestamp in nanoseconds
     """
 
     try:
-        time.sleep(60 / bpm / len(current_animation))
+        animation_time_diff = (time.time_ns() - begin_animation_time)  / (10 ** 9)# in seconds
+        time.sleep(60 / bpm / len(current_animation) - animation_time_diff)
     except:
         print('No BPM passed.')
         pass
@@ -186,11 +188,9 @@ def main():
     global current_animation_counter, current_animation, global_animation_counter, animations, strip
 
     # Create redis instance
-    # TODO: uncomment
-    # cache = redis.Redis(host='172.28.1.4', port=6379, db=0)
+    cache = redis.Redis(host='172.28.1.4', port=6379, db=0)
 
     # Create NeoPixel object with appropriate configuration.
-    # TODO: uncomment
     strip = PixelStrip(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL)
     # Intialize the library (must be called once before other functions).
     strip.begin()
@@ -204,10 +204,13 @@ def main():
 
             current_animation = animations[global_animation_counter]
 
+            print('New animation started.')
+
             while current_animation_counter < len(current_animation):
-                # vol, bpm, key = read_music_extractors(cache)
+                t1 = time.time_ns() # time before animation calculation in ns
+                vol, bpm, key = read_music_extractors(cache)
                 # TODO: remove
-                vol, bpm, key = (140, 124, 'C')
+                # vol, bpm, key = (140, 124, 'C')
                 current_state = current_animation[current_animation_counter]
                 adapted_current_state = add_extractors_to_animation_state(vol, key, current_state)
                 show_leds(strip, adapted_current_state)
@@ -216,8 +219,9 @@ def main():
                 if (current_animation_counter >= len(current_animation)):
                     current_animation_counter = 0
 
-                pause_animation(bpm)
+                pause_animation(bpm, t1)
                 
+            print('Animation ended.')
 
             global_animation_counter += 1
             if (global_animation_counter >= len(animations)):
