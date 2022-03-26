@@ -40,7 +40,7 @@ services:
         ipv4_address: 172.28.1.5
 
 
-  animation:
+  animator:
     image: "rgrun/music-visualizer-raspberrypi"
 
     container_name: music-animator
