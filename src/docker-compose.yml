@@ -53,7 +53,7 @@ services:
     tty: true
     stdin_open: true
 
-    command: python3 animator.py
+    # command: python3 animator.py
 
     networks:
       node_net:
