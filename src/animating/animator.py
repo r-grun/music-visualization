@@ -185,7 +185,7 @@ def pause_animation(bpm, begin_animation_time, current_animation_length) -> None
         animation_time_diff = (end_animation_time - begin_animation_time)  / (10 ** 9) # convert to seconds
         time.sleep(60 / bpm / current_animation_length + animation_time_diff)
     except KeyboardInterrupt:
-        exit()
+        raise KeyboardInterrupt
     except:
         print('Could not pause properly.')
     
@@ -239,7 +239,7 @@ def main():
 
     except KeyboardInterrupt:
         colorWipe(strip, Color(0, 0, 0), 10)
-        pass
+        exit()
         
 
 
