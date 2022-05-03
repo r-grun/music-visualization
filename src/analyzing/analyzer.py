@@ -12,6 +12,9 @@ def save_to_db(bpm, vol, key, scale) -> None:
         Saves the omitted values to the redis db
     """
 
+    bpm = round(bpm)
+    vol = round(vol)
+
     redis.set('bpm', bpm)
     print('bpm (' + str(bpm) + ') written to redis.')
 
