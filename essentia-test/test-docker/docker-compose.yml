@@ -1,5 +1,0 @@
-services:
-  web:
-    build: .
-    devices:
-    - "/dev/snd:/dev/snd"
