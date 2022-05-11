@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-05-11T12:01:55.954Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36" etag="OpP8-lO4JuizjrbSmDsO" version="18.0.2" type="github">
+<mxfile host="app.diagrams.net" modified="2022-05-11T12:09:13.529Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36" etag="PAoEQwkkdh6ZBy8Ne6B2" version="18.0.2" type="github" pages="4">
   <diagram id="bARDX519lpYNtVwNuSN_" name="Aufnahme">
     <mxGraphModel dx="573" dy="313" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -31,6 +31,92 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="ig6ye1CEXL4cXCdWVsDu" name="Analyse">
+    <mxGraphModel dx="2062" dy="1126" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="JZgN6x6NQCmFPZAqGVXT" name="Cache">
+    <mxGraphModel dx="825" dy="450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ppudIwoGMJgjri9WrSa5-1" value="Redis&lt;br&gt;KV Store" style="strokeWidth=1;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fillColor=none;labelPosition=center;verticalLabelPosition=bottom;align=center;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="370" y="100" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ppudIwoGMJgjri9WrSa5-2" value="Tempo" style="html=1;verticalAlign=middle;labelBackgroundColor=none;endArrow=oval;endFill=0;endSize=8;rounded=0;labelPosition=right;verticalLabelPosition=middle;align=left;" edge="1" parent="1">
+          <mxGeometry x="1" y="10" width="160" relative="1" as="geometry">
+            <mxPoint x="460" y="100" as="sourcePoint" />
+            <mxPoint x="490" y="100" as="targetPoint" />
+            <mxPoint x="10" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ppudIwoGMJgjri9WrSa5-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="340" y="90" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ppudIwoGMJgjri9WrSa5-4" value="Lautstärke" style="html=1;verticalAlign=middle;labelBackgroundColor=none;endArrow=oval;endFill=0;endSize=8;rounded=0;labelPosition=right;verticalLabelPosition=middle;align=left;" edge="1" parent="1">
+          <mxGeometry x="1" y="10" width="160" relative="1" as="geometry">
+            <mxPoint x="460" y="120" as="sourcePoint" />
+            <mxPoint x="490" y="120" as="targetPoint" />
+            <mxPoint x="10" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ppudIwoGMJgjri9WrSa5-5" value="Tonhöhe" style="html=1;verticalAlign=middle;labelBackgroundColor=none;endArrow=oval;endFill=0;endSize=8;rounded=0;labelPosition=right;verticalLabelPosition=middle;align=left;" edge="1" parent="1">
+          <mxGeometry x="1" y="10" width="160" relative="1" as="geometry">
+            <mxPoint x="460" y="140" as="sourcePoint" />
+            <mxPoint x="490" y="140" as="targetPoint" />
+            <mxPoint x="10" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ppudIwoGMJgjri9WrSa5-6" value="Tonalität" style="html=1;verticalAlign=middle;labelBackgroundColor=none;endArrow=oval;endFill=0;endSize=8;rounded=0;labelPosition=right;verticalLabelPosition=middle;align=left;" edge="1" parent="1">
+          <mxGeometry x="1" y="10" width="160" relative="1" as="geometry">
+            <mxPoint x="460" y="160" as="sourcePoint" />
+            <mxPoint x="490" y="160" as="targetPoint" />
+            <mxPoint x="10" y="10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ppudIwoGMJgjri9WrSa5-7" value="Tempo" style="html=1;verticalAlign=middle;labelBackgroundColor=none;startArrow=halfCircle;startFill=0;startSize=2;endArrow=none;rounded=0;labelPosition=left;verticalLabelPosition=middle;align=right;" edge="1" parent="1">
+          <mxGeometry x="-1" y="-10" relative="1" as="geometry">
+            <mxPoint x="310" y="100" as="sourcePoint" />
+            <mxPoint x="340" y="100" as="targetPoint" />
+            <mxPoint x="-10" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ppudIwoGMJgjri9WrSa5-8" value="Lautstärke" style="html=1;verticalAlign=middle;labelBackgroundColor=none;startArrow=halfCircle;startFill=0;startSize=2;endArrow=none;rounded=0;labelPosition=left;verticalLabelPosition=middle;align=right;" edge="1" parent="1">
+          <mxGeometry x="-1" y="-10" relative="1" as="geometry">
+            <mxPoint x="310" y="120" as="sourcePoint" />
+            <mxPoint x="340" y="120" as="targetPoint" />
+            <mxPoint x="-10" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ppudIwoGMJgjri9WrSa5-9" value="Tonhöhe" style="html=1;verticalAlign=middle;labelBackgroundColor=none;startArrow=halfCircle;startFill=0;startSize=2;endArrow=none;rounded=0;labelPosition=left;verticalLabelPosition=middle;align=right;" edge="1" parent="1">
+          <mxGeometry x="-1" y="-10" relative="1" as="geometry">
+            <mxPoint x="310" y="139.8" as="sourcePoint" />
+            <mxPoint x="340" y="139.8" as="targetPoint" />
+            <mxPoint x="-10" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ppudIwoGMJgjri9WrSa5-10" value="Tonalität" style="html=1;verticalAlign=middle;labelBackgroundColor=none;startArrow=halfCircle;startFill=0;startSize=2;endArrow=none;rounded=0;labelPosition=left;verticalLabelPosition=middle;align=right;" edge="1" parent="1">
+          <mxGeometry x="-1" y="-10" relative="1" as="geometry">
+            <mxPoint x="310" y="160" as="sourcePoint" />
+            <mxPoint x="340" y="160" as="targetPoint" />
+            <mxPoint x="-10" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="9Ykb8u4myzaHsO1sNgIG" name="Animation">
+    <mxGraphModel dx="2062" dy="1126" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
       </root>
     </mxGraphModel>
   </diagram>
