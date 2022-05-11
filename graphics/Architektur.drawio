@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-05-11T11:23:22.977Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36" etag="YZG_wHBbFeYjU8Nm-a5f" version="18.0.2" type="github">
+<mxfile host="app.diagrams.net" modified="2022-05-11T11:30:57.596Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36" etag="gGwXoQdUHgXEdtsQqqT4" version="18.0.2" type="github">
   <diagram name="Page-1" id="74b105a0-9070-1c63-61bc-23e55f88626e">
-    <mxGraphModel dx="1422" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1.5" pageWidth="1169" pageHeight="826" background="none" math="0" shadow="0">
+    <mxGraphModel dx="825" dy="450" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1.5" pageWidth="1169" pageHeight="826" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" style=";html=1;" />
         <mxCell id="1" style=";html=1;" parent="0" />
@@ -13,13 +13,10 @@
             <mxPoint x="880" y="220" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="9CzyhBuf1FsdNSluADcy-11" value="rec.wav" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="610" y="229.99999999999997" width="60" height="20" as="geometry" />
-        </mxCell>
         <mxCell id="9CzyhBuf1FsdNSluADcy-12" value="Recorder" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;gradientColor=none;" parent="1" vertex="1">
           <mxGeometry x="520" y="210" width="70" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="9CzyhBuf1FsdNSluADcy-13" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="9CzyhBuf1FsdNSluADcy-12" target="9CzyhBuf1FsdNSluADcy-14" edge="1">
+        <mxCell id="9CzyhBuf1FsdNSluADcy-13" value="rec.wav" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="9CzyhBuf1FsdNSluADcy-12" target="9CzyhBuf1FsdNSluADcy-14" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="890" y="209.9999999999999" as="sourcePoint" />
             <mxPoint x="890" y="249.9999999999999" as="targetPoint" />
