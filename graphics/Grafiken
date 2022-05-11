@@ -1,14 +1,13 @@
-<mxfile host="app.diagrams.net" modified="2022-05-11T13:01:01.909Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36" etag="n-LstK6CJAhSu4GK8Bi7" version="18.0.2" type="github" pages="4">
+<mxfile host="app.diagrams.net" modified="2022-05-11T13:07:54.931Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36" etag="zLrW1ZoLadnPqBrNyhMI" version="18.0.2" type="github" pages="4">
   <diagram id="bARDX519lpYNtVwNuSN_" name="Aufnahme">
-    <mxGraphModel dx="573" dy="313" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="573" dy="295" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="b0Co7ium0--Q_egbyEHV-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="b0Co7ium0--Q_egbyEHV-2" target="b0Co7ium0--Q_egbyEHV-3">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="b0Co7ium0--Q_egbyEHV-2" value="Mikrofon" style="shape=image;html=1;verticalAlign=bottom;verticalLabelPosition=top;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-mic-a-128.png;labelPosition=center;align=center;" vertex="1" parent="1">
-          <mxGeometry x="400" y="40" width="40" height="40" as="geometry" />
+        <mxCell id="b0Co7ium0--Q_egbyEHV-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="b0Co7ium0--Q_egbyEHV-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="80" as="sourcePoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="b0Co7ium0--Q_egbyEHV-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="b0Co7ium0--Q_egbyEHV-3" target="b0Co7ium0--Q_egbyEHV-5">
           <mxGeometry relative="1" as="geometry" />
@@ -30,6 +29,9 @@
             </Array>
             <mxPoint as="offset" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="gfYS3WAT8t4bStKWkL5o-1" value="Mikrofon" style="shape=image;html=1;verticalAlign=bottom;verticalLabelPosition=top;labelBackgroundColor=#ffffff;imageAspect=0;aspect=fixed;image=https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-mic-128.png;shadow=0;sketch=0;fontSize=12;strokeColor=default;strokeWidth=1;fillColor=#00A600;gradientColor=none;labelPosition=center;align=center;" vertex="1" parent="1">
+          <mxGeometry x="405" y="50" width="30" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
